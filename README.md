@@ -8,6 +8,9 @@ Learning) under review.
 - numpy== 1.19.5
 - scipy==1.5.4
 
+### Data
+The procedure of data collection is described in our manuscipt, and the processed data is accessible upon request.
+
 
 ### How to run the code?
-After preprocessing the [MLEE](http://nactem.ac.uk/MLEE/) dataset and put it under `mlee`, the main entrance is in `train.py`.
+run 'main.py'.
