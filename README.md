@@ -9,7 +9,7 @@ Learning) under review.
 - scipy==1.5.4
 
 ### Data
-The procedure of data collection is described in our manuscipt, and the processed data is accessible upon request.
+The procedure of data collection is described in our manuscript, and the processed data is accessible upon request.
 
 
 ### How to run the code?
