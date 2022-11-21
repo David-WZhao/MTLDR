@@ -27,22 +27,6 @@ import datetime
 os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 nowTime=datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
 
-'''
-class Logger(object):
-    def __init__(self, fileN="Default.log"):
-        self.terminal = sys.stdout
-        self.log = open(fileN, "a")
-
-    def write(self, message):
-        self.terminal.write(message)
-        self.terminal.flush()
-        self.log.write(message)
-        self.log.flush()
-
-    def flush(self):
-
-        pass
-'''
 
 
 data_set = 'DataSet'
@@ -51,21 +35,16 @@ print('data_set',data_set)
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 flags.DEFINE_integer('neg_sample_size', 1, 'Negative sample size.')
-flags.DEFINE_float('learning_rate', 1e-2, 'Initial learning rate.')
-flags.DEFINE_integer('epochs', 2, 'Number of epochs to train.')
+flags.DEFINE_float('learning_rate', 1e-3, 'Initial learning rate.')
+flags.DEFINE_integer('epochs', 10, 'Number of epochs to train.')
 flags.DEFINE_integer('hidden1',64, 'Number of units in hidden layer 1.')
 flags.DEFINE_integer('hidden2', 64, 'Number of units in hidden layer 2.')
 flags.DEFINE_float('weight_decay', 0, 'Weight for L2 loss on embedding matrix.')
 flags.DEFINE_float('dropout', 0, 'Dropout rate (1 - keep probability).')
 flags.DEFINE_float('max_margin', 0.1, 'Max margin parameter in hinge loss')
-flags.DEFINE_integer('batch_size', 512, 'minibatch size.')
+flags.DEFINE_integer('batch_size', 256, 'minibatch size.')
 flags.DEFINE_boolean('bias', True, 'Bias term.')
 
-# you can make a log dictionary in the ./EEG-DTI.
-# then you can store the log file of every runs.
-#instruction = 'xxxxx'
-#os.makedirs('./log/'+data_set+str(nowTime)+instruction)
-#sys.stdout = Logger('./log/'+data_set+str(nowTime)+instruction+'/terminal.txt')
 
 
 #01
@@ -383,7 +362,6 @@ for seed in range(0, 10):
     edge_type2decoder = {
         # 点积
         (0, 0): 'innerproduct',  # type1
-        # 为什么蛋白质-蛋白质是两个？蛋白质-蛋白质网络不是同质的吗？
         (0, 1): 'innerproduct',  # type2
         (0, 2): 'innerproduct',
 
@@ -424,7 +402,7 @@ for seed in range(0, 10):
         seed=seed,  # 10折交叉验证的fold
         data_set=data_set,
         edge_types=edge_types,  # 边的关系类型
-        batch_size=FLAGS.batch_size,  # 128
+        batch_size=FLAGS.batch_size,  # 
         val_test_size=val_test_size  # 0.1
     )
 
@@ -480,14 +458,6 @@ for seed in range(0, 10):
             batch_edge_type = outs[2]
 
             if itr % PRINT_PROGRESS_EVERY == 0:
-                #val_auc, val_auprc, val_apk = get_accuracy_scores(
-                 #   minibatch.val_edges, minibatch.val_edges_false,
-                  #  minibatch.idx2edge_type[minibatch.current_edge_type_idx])
-
-                #print("Epoch:", "%04d" % (epoch + 1), "Iter:", "%04d" % (itr + 1), "Edge:", "%04d" % batch_edge_type,
-                 #     "train_loss=", "{:.5f}".format(train_cost),
-                  #    "val_roc=", "{:.5f}".format(val_auc), "val_auprc=", "{:.5f}".format(val_auprc),
-                   #   "val_apk=", "{:.5f}".format(val_apk), "time=", "{:.5f}".format(time.time() - t))
                 print('itr:',itr)
             itr += 1
 
